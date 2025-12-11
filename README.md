@@ -1,0 +1,8 @@
+## For fun - NO AI!
+
+GOAL: READ CONCEPTS AND GOOGLE THEM BYSELF.
+
+STEPS:
+
+1. WRITE brief concepts in README.
+2. IMPLEMENT!
