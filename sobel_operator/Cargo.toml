@@ -5,3 +5,8 @@ edition = "2024"
 
 [dependencies]
 image = "0.25"
+criterion = { version = "0.8.1" }
+
+[[bench]]
+name = "sobel_bench"
+harness = false
