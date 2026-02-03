@@ -5,6 +5,9 @@ use std::{env, fs};
 const IMAGE_PATH: &str = "images";
 const PROCESSED_PATH: &str = "processed_images";
 
+const SOBEL_X_FILTER: [i32; 9] = [-1, 0, 1, -2, 0, 2, -1, 0, 1];
+const SOBEL_Y_FILTER: [i32; 9] = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
+
 pub fn sobel_operation() {
     let mut image_dir = env::current_dir().unwrap();
     let mut processed_dir = env::current_dir().unwrap();
@@ -46,33 +49,46 @@ pub fn process_image(image: &GrayImage) -> GrayImage {
 }
 
 pub fn process_pixel(image: &GrayImage, x: u32, y: u32) -> u8 {
-    let raw_image = image.as_raw();
-    let width = image.width() as usize;
-    let x = x as usize;
-    let y = y as usize;
-    let first_row = (y - 1) * width;
-    let second_row = y * width;
-    let third_row = (y + 1) * width;
-    let first_col = x - 1;
-    let second_col = x;
-    let third_col = x + 1;
-    let top_left = raw_image[first_row + first_col] as i32;
-    let top_mid = raw_image[first_row + second_col] as i32;
-    let top_right = raw_image[first_row + third_col] as i32;
-    let middle_left = raw_image[second_row + first_col] as i32;
-    // middle_middle is always 0;
-    let middle_right = raw_image[second_row + third_col] as i32;
-    let bot_left = raw_image[third_row + first_col] as i32;
-    let bot_mid = raw_image[third_row + second_col] as i32;
-    let bot_right = raw_image[third_row + third_col] as i32;
+    // let raw_image = image.as_raw();
+    // let width = image.width() as usize;
+    // let x = x as usize;
+    // let y = y as usize;
+    // let first_row = (y - 1) * width;
+    // let second_row = y * width;
+    // let third_row = (y + 1) * width;
+    // let first_col = x - 1;
+    // let second_col = x;
+    // let third_col = x + 1;
+    // let top_left = raw_image[first_row + first_col] as i32;
+    // let top_mid = raw_image[first_row + second_col] as i32;
+    // let top_right = raw_image[first_row + third_col] as i32;
+    // let middle_left = raw_image[second_row + first_col] as i32;
+    // // middle_middle is always 0;
+    // let middle_right = raw_image[second_row + third_col] as i32;
+    // let bot_left = raw_image[third_row + first_col] as i32;
+    // let bot_mid = raw_image[third_row + second_col] as i32;
+    // let bot_right = raw_image[third_row + third_col] as i32;
 
-    //
-    // const SOBEL_X_FILTER: [i32; 9] = [-1, 0, 1, -2, 0, 2, -1, 0, 1];
-    // const SOBEL_Y_FILTER: [i32; 9] = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
-    let sum_x = top_right - top_left + 2 * middle_right - 2 * middle_left + bot_right - bot_left;
-    let sum_y = bot_left + 2 * bot_mid + bot_right - top_left - 2 * top_mid - top_right;
+    // //
+    // // const SOBEL_X_FILTER: [i32; 9] = [-1, 0, 1, -2, 0, 2, -1, 0, 1];
+    // // const SOBEL_Y_FILTER: [i32; 9] = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
+    // let sum_x = top_right - top_left + 2 * middle_right - 2 * middle_left + bot_right - bot_left;
+    // let sum_y = bot_left + 2 * bot_mid + bot_right - top_left - 2 * top_mid - top_right;
 
-    //min max can be better?
-    // Luma::from([(sum_x.pow(2) + sum_y.pow(2)).isqrt().min(255) as u8])
+    // //min max can be better?
+    // // Luma::from([(sum_x.pow(2) + sum_y.pow(2)).isqrt().min(255) as u8])
+    let mut sum_x = 0;
+    let mut sum_y = 0;
+    for i in 0..3 {
+        for j in 0..3 {
+            // Convolution
+            // always size 1 vec
+            // send pointer to top left first
+            let cur_pix = image.as_raw()[(x + 1 - i + (y + 1 - j) * image.width()) as usize] as i32;
+            sum_x += cur_pix * SOBEL_X_FILTER[(j * 3 + i) as usize];
+            sum_y += cur_pix * SOBEL_Y_FILTER[(j * 3 + i) as usize];
+        }
+    }
+
     (sum_x.pow(2) + sum_y.pow(2)).isqrt().min(255) as u8
 }
