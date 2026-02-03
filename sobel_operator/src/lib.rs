@@ -1,5 +1,6 @@
 use image::{GrayImage, Luma};
-use std::{env, ffi::OsString, fs};
+use rayon::prelude::*;
+use std::{env, fs};
 
 const IMAGE_PATH: &str = "images";
 const PROCESSED_PATH: &str = "processed_images";
@@ -9,22 +10,19 @@ pub fn sobel_operation() {
     let mut processed_dir = env::current_dir().unwrap();
     image_dir.push(IMAGE_PATH);
     processed_dir.push(PROCESSED_PATH);
-    let images: Vec<(OsString, GrayImage)> = fs::read_dir(image_dir)
+    fs::read_dir(image_dir)
         .unwrap()
-        .map(|file| {
-            let file = file.unwrap();
-            (
-                file.file_name(),
-                image::open(file.path()).unwrap().into_luma8(),
-            )
+        .filter_map(|result| result.ok())
+        .collect::<Vec<_>>()
+        .into_par_iter()
+        .for_each(|file| {
+            let image: image::ImageBuffer<Luma<u8>, Vec<u8>> =
+                image::open(file.path()).unwrap().into_luma8();
+            let image = process_image(&image);
+            let mut new_path = processed_dir.clone();
+            new_path.push(file.file_name());
+            image.save(&new_path).unwrap();
         })
-        .collect();
-    for image in images {
-        let new_image = process_image(&image.1);
-        let mut new_path = processed_dir.clone();
-        new_path.push(&image.0);
-        new_image.save(&new_path).unwrap();
-    }
 }
 
 pub fn process_image(image: &GrayImage) -> GrayImage {
