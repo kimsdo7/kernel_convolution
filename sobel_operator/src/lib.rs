@@ -4,8 +4,8 @@ use std::{env, ffi::OsString, fs};
 const IMAGE_PATH: &str = "images";
 const PROCESSED_PATH: &str = "processed_images";
 
-const SOBEL_X_FILTER: [[i32; 3]; 3] = [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]];
-const SOBEL_Y_FILTER: [[i32; 3]; 3] = [[-1, -2, -1], [0, 0, 0], [1, 2, 1]];
+const SOBEL_X_FILTER: [i32; 9] = [-1, 0, 1, -2, 0, 2, -1, 0, 1];
+const SOBEL_Y_FILTER: [i32; 9] = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
 
 pub fn sobel_operation() {
     let mut image_dir = env::current_dir().unwrap();
@@ -49,9 +49,9 @@ pub fn process_pixel(image: &GrayImage, x: u32, y: u32) -> Luma<u8> {
             // Convolution
             // always size 1 vec
             // send pointer to top left first
-            let cur_pix = *image.get_pixel(x + 1 - i, y + 1 - j).0.first().unwrap() as i32;
-            sum_x += cur_pix * SOBEL_X_FILTER[j as usize][i as usize];
-            sum_y += cur_pix * SOBEL_Y_FILTER[j as usize][i as usize];
+            let cur_pix = image.as_raw()[(x + 1 - i + (y + 1 - j) * image.width()) as usize] as i32;
+            sum_x += cur_pix * SOBEL_X_FILTER[(j * 3 + i) as usize];
+            sum_y += cur_pix * SOBEL_Y_FILTER[(j * 3 + i) as usize];
         }
     }
     //min max can be better?
