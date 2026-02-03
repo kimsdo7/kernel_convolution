@@ -1,0 +1,51 @@
+   Compiling sobel_operator v0.1.0 (/Users/hester_mofet/workspace/kernel_convolution/sobel_operator)
+    Finished `bench` profile [optimized] target(s) in 10.17s
+     Running unittests src/lib.rs (target/release/deps/sobel_operator-4a71abf6680d5291)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/sobel_operator-1063387f576e973a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running benches/sobel_bench.rs (target/release/deps/sobel_bench-44e8e27448a40e5f)
+Gnuplot not found, using plotters backend
+Benchmarking Sobel Bench
+Benchmarking Sobel Bench: Warming up for 3.0000 s
+
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 153.5s, or reduce sample count to 10.
+Benchmarking Sobel Bench: Collecting 100 samples in estimated 153.47 s (100 iterations)
+Benchmarking Sobel Bench: Analyzing
+Sobel Bench             time:   [1.4606 s 1.4662 s 1.4720 s]
+                        change: [+1.7242% +2.1540% +2.5961%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Image Bench
+Benchmarking Image Bench: Warming up for 3.0000 s
+
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 20.4s, or reduce sample count to 20.
+Benchmarking Image Bench: Collecting 100 samples in estimated 20.353 s (100 iterations)
+Benchmarking Image Bench: Analyzing
+Image Bench             time:   [203.20 ms 203.83 ms 204.62 ms]
+                        change: [+2.8327% +3.2111% +3.6855%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 9 outliers among 100 measurements (9.00%)
+  8 (8.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Pixel Bench
+Benchmarking Pixel Bench: Warming up for 3.0000 s
+Benchmarking Pixel Bench: Collecting 100 samples in estimated 5.0000 s (808M iterations)
+Benchmarking Pixel Bench: Analyzing
+Pixel Bench             time:   [6.0869 ns 6.1335 ns 6.1825 ns]
+                        change: [+13.965% +14.749% +15.558%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 4 outliers among 100 measurements (4.00%)
+  4 (4.00%) high mild
+
