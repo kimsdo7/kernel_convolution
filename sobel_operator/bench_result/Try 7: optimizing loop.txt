@@ -1,0 +1,49 @@
+   Compiling sobel_operator v0.1.0 (/Users/hester_mofet/workspace/kernel_convolution/sobel_operator)
+    Finished `bench` profile [optimized] target(s) in 9.35s
+     Running unittests src/lib.rs (target/release/deps/sobel_operator-43d7d65f83559042)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/sobel_operator-3151fa37f8694ae5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running benches/sobel_bench.rs (target/release/deps/sobel_bench-9e579c9754a7f9c3)
+Gnuplot not found, using plotters backend
+Benchmarking Sobel Bench
+Benchmarking Sobel Bench: Warming up for 3.0000 s
+
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 35.2s, or reduce sample count to 10.
+Benchmarking Sobel Bench: Collecting 100 samples in estimated 35.182 s (100 iterations)
+Benchmarking Sobel Bench: Analyzing
+Sobel Bench             time:   [352.38 ms 354.37 ms 356.66 ms]
+                        change: [−6.1638% −5.1750% −4.3019%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 9 outliers among 100 measurements (9.00%)
+  6 (6.00%) high mild
+  3 (3.00%) high severe
+
+Benchmarking Image Bench
+Benchmarking Image Bench: Warming up for 3.0000 s
+Benchmarking Image Bench: Collecting 100 samples in estimated 6.9859 s (300 iterations)
+Benchmarking Image Bench: Analyzing
+Image Bench             time:   [24.599 ms 25.550 ms 26.720 ms]
+                        change: [−31.295% −27.766% −23.775%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high severe
+
+Benchmarking Pixel Bench
+Benchmarking Pixel Bench: Warming up for 3.0000 s
+Benchmarking Pixel Bench: Collecting 100 samples in estimated 5.0000 s (896M iterations)
+Benchmarking Pixel Bench: Analyzing
+Pixel Bench             time:   [5.4834 ns 5.5075 ns 5.5313 ns]
+                        change: [−1.1877% +1.0093% +2.8515%] (p = 0.36 > 0.05)
+                        No change in performance detected.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high severe
+

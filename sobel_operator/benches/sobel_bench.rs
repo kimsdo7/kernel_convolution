@@ -16,10 +16,13 @@ fn image_bench(c: &mut Criterion) {
 
 fn pixel_bench(c: &mut Criterion) {
     let img = image::open("images/monet.jpeg").unwrap().into_luma8();
+    let width = img.width();
+    let raw_image = img.as_raw();
     c.bench_function("Pixel Bench", |b| {
         b.iter(|| {
             black_box(process_pixel(
-                black_box(&img),
+                black_box(raw_image),
+                black_box(width),
                 black_box(100),
                 black_box(100),
             ))
