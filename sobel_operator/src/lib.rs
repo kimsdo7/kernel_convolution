@@ -27,16 +27,25 @@ pub fn sobel_operation() {
 
 pub fn process_image(image: &GrayImage) -> GrayImage {
     // left top shifted?
+    let width = image.width() as usize;
+    let height = image.height() as usize;
     let mut new_image = GrayImage::new(image.width(), image.height());
-    for i in 1..(image.width() - 1) {
-        for j in 1..(image.height() - 1) {
-            new_image.put_pixel(i, j, process_pixel(image, i, j));
-        }
-    }
+    new_image
+        .par_iter_mut()
+        .enumerate()
+        .for_each(|(index, pixel)| {
+            if index > width
+                && index < width * (height - 1)
+                && index % width != 0
+                && index % width != width - 1
+            {
+                *pixel = process_pixel(image, (index % width) as u32, (index / width) as u32)
+            }
+        });
     new_image
 }
 
-pub fn process_pixel(image: &GrayImage, x: u32, y: u32) -> Luma<u8> {
+pub fn process_pixel(image: &GrayImage, x: u32, y: u32) -> u8 {
     let raw_image = image.as_raw();
     let width = image.width() as usize;
     let x = x as usize;
@@ -64,5 +73,6 @@ pub fn process_pixel(image: &GrayImage, x: u32, y: u32) -> Luma<u8> {
     let sum_y = bot_left + 2 * bot_mid + bot_right - top_left - 2 * top_mid - top_right;
 
     //min max can be better?
-    Luma::from([(sum_x.pow(2) + sum_y.pow(2)).isqrt().min(255) as u8])
+    // Luma::from([(sum_x.pow(2) + sum_y.pow(2)).isqrt().min(255) as u8])
+    (sum_x.pow(2) + sum_y.pow(2)).isqrt().min(255) as u8
 }

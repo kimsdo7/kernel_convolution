@@ -1,0 +1,48 @@
+   Compiling sobel_operator v0.1.0 (/Users/hester_mofet/workspace/kernel_convolution/sobel_operator)
+    Finished `bench` profile [optimized] target(s) in 8.56s
+     Running unittests src/lib.rs (target/release/deps/sobel_operator-43d7d65f83559042)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/sobel_operator-3151fa37f8694ae5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running benches/sobel_bench.rs (target/release/deps/sobel_bench-9e579c9754a7f9c3)
+Gnuplot not found, using plotters backend
+Benchmarking Sobel Bench
+Benchmarking Sobel Bench: Warming up for 3.0000 s
+
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 38.8s, or reduce sample count to 10.
+Benchmarking Sobel Bench: Collecting 100 samples in estimated 38.813 s (100 iterations)
+Benchmarking Sobel Bench: Analyzing
+Sobel Bench             time:   [380.08 ms 382.96 ms 385.96 ms]
+                        change: [−24.793% −24.196% −23.621%] (p = 0.00 < 0.05)
+                        Performance has improved.
+
+Benchmarking Image Bench
+Benchmarking Image Bench: Warming up for 3.0000 s
+Benchmarking Image Bench: Collecting 100 samples in estimated 6.1705 s (200 iterations)
+Benchmarking Image Bench: Analyzing
+Image Bench             time:   [28.053 ms 28.442 ms 28.893 ms]
+                        change: [−86.370% −86.177% −85.940%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 13 outliers among 100 measurements (13.00%)
+  9 (9.00%) high mild
+  4 (4.00%) high severe
+
+Benchmarking Pixel Bench
+Benchmarking Pixel Bench: Warming up for 3.0000 s
+Benchmarking Pixel Bench: Collecting 100 samples in estimated 5.0000 s (817M iterations)
+Benchmarking Pixel Bench: Analyzing
+Pixel Bench             time:   [6.0823 ns 6.1243 ns 6.1668 ns]
+                        change: [−1.0201% +0.0099% +1.0581%] (p = 0.98 > 0.05)
+                        No change in performance detected.
+Found 4 outliers among 100 measurements (4.00%)
+  1 (1.00%) high mild
+  3 (3.00%) high severe
+
